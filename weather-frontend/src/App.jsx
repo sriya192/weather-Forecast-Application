@@ -5,7 +5,7 @@ function App() {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [history, setHistory] = useState([]);
-  const [historyFilter, setHistoryFilter] = useState(''); // 🔥 EXTRA FEATURE 3: History search filter state
+  const [historyFilter, setHistoryFilter] = useState(''); 
   const [isCelsius, setIsCelsius] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -78,7 +78,7 @@ function App() {
     return basePhrase + extraInsight;
   };
 
-  // 🔥 EXTRA FEATURE 4: Extreme Weather & UV Risk Hazard Predictor Engine
+  
   const getWeatherHazards = () => {
     if (!weatherData) return null;
     const speed = weatherData.current.wind.speed;
@@ -90,7 +90,7 @@ function App() {
     if (humidity > 75 && weatherData.current.main.temp > 28) alerts.push("🥵 Sticky Heat Index: Stay in air-conditioned areas if possible.");
     if (mainCondition === 'Thunderstorm') alerts.push("⚡ Lightning Risk: Keep indoors and unplug sensitive electronics.");
     
-    // Fallback normal reading if no emergency targets hit
+  
     if (alerts.length === 0) {
       return "✅ Atmospheric Safety: No severe weather or climate hazards detected.";
     }
@@ -118,7 +118,7 @@ function App() {
     fetchHistory();
   }, []);
 
-  // Filter local logs computation
+  
   const filteredHistory = history.filter(item => 
     item.city.toLowerCase().includes(historyFilter.toLowerCase())
   );
@@ -179,7 +179,7 @@ function App() {
 
         {weatherData && !loading && (
           <div>
-            {/* 🔥 NEW COMPONENT: Hazard & Warning Ticker Banner */}
+            {/*  NEW COMPONENT: Hazard & Warning Ticker Banner */}
             <div className="mb-6 bg-red-500/20 border border-red-500/30 text-red-200 p-3 rounded-xl text-center text-xs font-semibold tracking-wide animate-pulse">
               {getWeatherHazards()}
             </div>
@@ -235,7 +235,7 @@ function App() {
                     )}
                   </div>
 
-                  {/* 🔥 NEW COMPONENT: History Panel Sub-Filter */}
+                  {/* NEW COMPONENT: History Panel Sub-Filter */}
                   {history.length > 0 && (
                     <input 
                       type="text"
