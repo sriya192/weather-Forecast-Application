@@ -1,16 +1,55 @@
-# React + Vite
+# Climate Dashboard - Weather & Climate Monitoring Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A responsive full-stack weather application built with **React**, **Node.js/Express**, and **Tailwind CSS**. The app delivers real-time weather updates, 5-day forecasts, atmospheric indicators (humidity, pressure, wind speed, UV index), and location auto-detection powered by the OpenWeather API.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Key Features
 
-## React Compiler
+* **Real-Time Weather Metrics:** Live updates for temperature, humidity, wind velocity, barometric pressure, visibility, and UV index.
+* **5-Day Weather Forecast:** Daily projections with customized weather icons to help plan ahead.
+* **Location Search & Auto-Detection:** Search for any city globally or use your device's geolocation with a single click.
+* **Unit Conversion:** Easily toggle between Metric (°C) and Imperial (°F) units.
+* **Dynamic Weather Alerts:** Displays contextual weather warnings and activity suggestions based on current ambient conditions.
+* **Clean & Responsive UI:** Designed with dark mode UI components that scale seamlessly across desktop and mobile screens.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+* **Frontend:** React.js, Vite, Tailwind CSS, JavaScript (ES6+)
+* **Backend:** Node.js, Express.js, Axios / Fetch API
+* **External APIs:** OpenWeather API
+* **Tooling & Linting:** Oxlint, npm
+
+---
+
+## Project Structure
+```text
+climate2/
+├── weather-backend/
+│   ├── node_modules/
+│   ├── .env               # API keys and environment configuration
+│   ├── .gitignore
+│   ├── package.json       # Backend dependencies
+│   ├── package-lock.json
+│   └── server.js          # Express server and API routing gateway
+└── weather-frontend/
+    ├── node_modules/
+    ├── public/
+    │   ├── favicon.svg
+    │   └── icons.svg
+    ├── src/
+    │   ├── assets/
+    │   ├── App.css
+    │   ├── App.jsx        # Main UI layout and logic
+    │   ├── index.css      # Tailwind imports & global styles
+    │   └── main.jsx       # React entry point
+    ├── .gitignore
+    ├── .oxlintrc.json
+    ├── index.html
+    ├── package.json       # Frontend dependencies
+    ├── package-lock.json
+    ├── README.md
+    ├── tailwind.config.js
+    └── vite.config.js

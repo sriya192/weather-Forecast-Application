@@ -8,23 +8,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. Connect to MongoDB Atlas (using your .env file variable)
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("🚀 MongoDB Connected Successfully"))
-  .catch(err => console.error("❌ Database connection error: ", err));
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("Database connection error:", err));
 
-// 2. Define a Simple History Schema
 const SearchHistorySchema = new mongoose.Schema({
   city: String,
   timestamp: { type: Date, default: Date.now }
 });
 const SearchHistory = mongoose.model('SearchHistory', SearchHistorySchema);
 
-// 3. Core API Route: Handles city text searches AND geolocation coordinates
+// Handles both city text searches and geolocation coordinates
 app.get('/api/weather', async (req, res) => {
   const { city, lat, lon } = req.query;
   const API_KEY = process.env.OPENWEATHER_API_KEY;
-  
+
   try {
     let currentUrl = '';
     let forecastUrl = '';
@@ -39,20 +37,31 @@ app.get('/api/weather', async (req, res) => {
       return res.status(400).json({ message: "City name or coordinates required" });
     }
 
-    // Call both endpoints at the same time to save latency
+    // fetch current + forecast together to save a round trip
     const [currentRes, forecastRes] = await Promise.all([
       axios.get(currentUrl),
       axios.get(forecastUrl)
     ]);
 
-    // Automatically log this search to our MongoDB database
     const savedCity = currentRes.data.name;
     await SearchHistory.create({ city: savedCity });
 
-    // Send unified payload back to React
+    // UV index comes from Open-Meteo, a free API that needs no key or
+    // subscription. Kept in its own try/catch so an outage there never
+    // takes down the rest of the weather response.
+    let uvIndex = null;
+    try {
+      const { lat: resolvedLat, lon: resolvedLon } = currentRes.data.coord;
+      const uvUrl = `https://api.open-meteo.com/v1/forecast?latitude=${resolvedLat}&longitude=${resolvedLon}&current=uv_index`;
+      const uvRes = await axios.get(uvUrl);
+      uvIndex = uvRes.data.current.uv_index;
+    } catch (uvError) {
+      console.warn("UV index unavailable:", uvError.message);
+    }
+
     res.json({
-      current: currentRes.data,
-      forecast: forecastRes.data.list.filter((item, index) => index % 8 === 0) // Filters to 1 forecast point per day
+      current: { ...currentRes.data, uvi: uvIndex },
+      forecast: forecastRes.data.list.filter((item, index) => index % 8 === 0) // one point per day
     });
 
   } catch (error) {
@@ -60,7 +69,7 @@ app.get('/api/weather', async (req, res) => {
   }
 });
 
-// 4. History API Route: Fetches the last 5 searched cities
+// Last 5 searched cities
 app.get('/api/history', async (req, res) => {
   try {
     const history = await SearchHistory.find().sort({ timestamp: -1 }).limit(5);
@@ -71,4 +80,4 @@ app.get('/api/history', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🔥 Server smoothly running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
