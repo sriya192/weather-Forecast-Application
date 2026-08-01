@@ -10,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const BACKEND_URL = 'http://localhost:5000/api';
+  const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
   const popularCities = ['Mumbai', 'New York', 'London', 'Tokyo', 'Paris'];
 
   const fetchHistory = async () => {
