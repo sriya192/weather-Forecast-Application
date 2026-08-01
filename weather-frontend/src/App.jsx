@@ -122,7 +122,7 @@ function App() {
       <div className="w-full max-w-4xl bg-white/10 backdrop-blur-md rounded-3xl p-6 shadow-2xl mt-8">
 
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold tracking-wide ml-2">Climate Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-wide ml-2">AeroCast</h1>
           <button
             onClick={() => setIsCelsius(!isCelsius)}
             className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full font-semibold border border-white/20 transition"

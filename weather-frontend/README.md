@@ -1,4 +1,4 @@
-# Climate Dashboard - Weather & Climate Monitoring Dashboard
+# AeroCast- Weather Forecast Application
 
 A responsive full-stack weather application built with **React**, **Node.js/Express**, and **Tailwind CSS**. The app delivers real-time weather updates, 5-day forecasts, atmospheric indicators (humidity, pressure, wind speed, UV index), and location auto-detection powered by the OpenWeather API.
 
@@ -17,16 +17,24 @@ A responsive full-stack weather application built with **React**, **Node.js/Expr
 
 ## Tech Stack
 
-* **Frontend:** React.js, Vite, Tailwind CSS, JavaScript (ES6+)
-* **Backend:** Node.js, Express.js, Axios / Fetch API
-* **External APIs:** OpenWeather API
-* **Tooling & Linting:** Oxlint, npm
+* **Frontend:** React.js, Vite, Tailwind CSS, Axios
+* **Backend:** Node.js, Express.js,Axios
+* **External APIs:** OpenWeather API,Open Meteo
 
+---
+## Environment Variables
+
+ `.env` file inside `weather-backend/` with:
+
+MONGO_URI=your_mongodb_atlas_connection_string
+OPENWEATHER_API_KEY=your_openweathermap_api_key
+PORT=5000
+Open-Meteo needs no key.
 ---
 
 ## Project Structure
 ```text
-climate2/
+Climate2/
 ├── weather-backend/
 │   ├── node_modules/
 │   ├── .env               # API keys and environment configuration
